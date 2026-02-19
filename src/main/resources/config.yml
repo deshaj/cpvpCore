@@ -2,7 +2,7 @@ prefix: '&8[&b&lCrystalPvP&8] &7'
 
 messages:
   no-permission: '&cYou do not have permission to use this command!'
-  
+
   kit-saved: '&a&lKit Saved! &7Your current inventory has been saved as the event kit.'
   wand-given: '&a&lSelection Wand Received! &7Left-click to set position 1, right-click to set position 2.'
   pos1-set: '&a&lPosition 1 Set! &f{x}, {y}, {z}'
@@ -10,60 +10,97 @@ messages:
   center-set: '&a&lArena Center Set! &7This will be the center of the world border.'
   spawn-set: '&a&lSpawn Point Set! &7Players will be teleported here when the event starts.'
   lobby-set: '&a&lLobby Location Set! &7Players will return here after the event ends.'
+  die-position-set: '&a&lDeath Spectator Location Set! &7Eliminated players will be teleported here.'
   border-set: '&a&lBorder Radius Set! &7Initial border diameter: &f{radius} &7blocks.'
-  
-  event-opened: '&a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &6&lCRYSTAL PVP EVENT &a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━\n&7The event is now &a&lOPEN &7for registration!\n&7Join the server now to participate in the event!\n&a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  event-opened:
+    - '&a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &6&lCRYSTAL PVP EVENT &a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━'
+    - '&7The event is now &a&lOPEN &7for registration!'
+    - '&7Join the server now to participate in the event!'
+    - '&a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   event-opened-title: '&6&lEVENT OPEN'
   event-opened-subtitle: '&a&lJoin to participate!'
-  
-  event-started: '&e&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &c&lEVENT STARTING &e&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━\n&7The event will begin in &e&l30 seconds&7!\n&7Prepare yourself for intense combat!\n&e&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  event-started:
+    - '&e&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &c&lEVENT STARTING &e&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━'
+    - '&7The event will begin in &e&l30 seconds&7!'
+    - '&7Prepare yourself for intense combat!'
+    - '&e&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   event-started-title: '&c&lEVENT STARTING'
   event-started-subtitle: '&e&lPrepare for battle in 30 seconds!'
-  
+
   countdown: '&e&l{time}'
   countdown-subtitle: '&7seconds until event begins'
-  
+
   event-begin: '&c&lFIGHT!'
   event-begin-subtitle: '&7Last player standing wins!'
-  event-begin-broadcast: '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &4&lFIGHT! &c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━\n&7The battle has begun! &c&lLast player standing wins!\n&7Good luck to all &f{players} &7participants!\n&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-  
+  event-begin-broadcast:
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &4&lFIGHT! &c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━'
+    - '&7The battle has begun! &c&lLast player standing wins!'
+    - '&7Good luck to all &f{players} &7participants!'
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
   player-eliminated: '&8[&c✖&8] &c{player} &7has been eliminated! &8(&f{remaining} &7remaining&8)'
   player-eliminated-title: '&c&l{player}'
   player-eliminated-subtitle: '&7has been eliminated!'
-  
-  winner-announced: '&6&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &e&l⚔ WINNER ⚔ &6&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━\n&e&l{winner} &6has won the Crystal PvP Event!\n&7Congratulations on your victory!\n&6&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  winner-announced:
+    - '&6&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &e&l⚔ WINNER ⚔ &6&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━'
+    - '&e&l{winner} &6has won the Crystal PvP Event!'
+    - '&7Congratulations on your victory!'
+    - '&6&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   winner-title: '&6&l&n{winner}'
   winner-subtitle: '&e&lWins the Event!'
-  
-  border-shrinking: '&c&l&m━━━━━━━━━━━━━━━━━━━━&r &4&lBORDER SHRINKING &c&l&m━━━━━━━━━━━━━━━━━━━━\n&7The world border is shrinking to &c&l{size} &7blocks\n&7Time: &f{time} &7seconds &8| &7Watch out for the red border!\n&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  border-shrinking:
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━&r &4&lBORDER SHRINKING &c&l&m━━━━━━━━━━━━━━━━━━━━'
+    - '&7The world border is shrinking to &c&l{size} &7blocks'
+    - '&7Time: &f{time} &7seconds &8| &7Watch out for the red border!'
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   border-shrinking-title: '&c&lBORDER SHRINKING'
   border-shrinking-subtitle: '&7{size} blocks in {time} seconds'
-  
-  border-expanding: '&a&l&m━━━━━━━━━━━━━━━━━━━━&r &2&lBORDER EXPANDING &a&l&m━━━━━━━━━━━━━━━━━━━━\n&7The world border is expanding to &a&l{size} &7blocks\n&7Time: &f{time} &7seconds &8| &7More space to fight!\n&a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  border-expanding:
+    - '&a&l&m━━━━━━━━━━━━━━━━━━━━&r &2&lBORDER EXPANDING &a&l&m━━━━━━━━━━━━━━━━━━━━'
+    - '&7The world border is expanding to &a&l{size} &7blocks'
+    - '&7Time: &f{time} &7seconds &8| &7More space to fight!'
+    - '&a&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   border-expanding-title: '&a&lBORDER EXPANDING'
   border-expanding-subtitle: '&7{size} blocks in {time} seconds'
-  
-  drop-phase: '&4&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &c&l⚠ DROP PHASE ⚠ &4&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━\n&7The ground is about to disappear!\n&c&lGet ready to fall into the void!\n&4&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  drop-phase:
+    - '&4&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━&r &c&l⚠ DROP PHASE ⚠ &4&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━'
+    - '&7The ground is about to disappear!'
+    - '&c&lGet ready to fall into the void!'
+    - '&4&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   drop-phase-title: '&4&l⚠ DROP PHASE ⚠'
   drop-phase-subtitle: '&c&lThe ground is disappearing!'
-  
-  event-cancelled: '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━&r &4&lEVENT CANCELLED &c&l&m━━━━━━━━━━━━━━━━━━━━━━━\n&7The event has been cancelled by an administrator.\n&7Thank you for participating!\n&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  event-cancelled:
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━&r &4&lEVENT CANCELLED &c&l&m━━━━━━━━━━━━━━━━━━━━━━━'
+    - '&7The event has been cancelled by an administrator.'
+    - '&7Thank you for participating!'
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   event-cancelled-title: '&c&lEVENT CANCELLED'
   event-cancelled-subtitle: '&7Event cancelled by admin'
-  
-  event-force-ended: '&c&l&m━━━━━━━━━━━━━━━━━━━━━&r &4&lEVENT FORCE-ENDED &c&l&m━━━━━━━━━━━━━━━━━━━━━\n&7The event has been force-ended by an administrator.\n&7No winner declared.\n&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+
+  event-force-ended:
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━&r &4&lEVENT FORCE-ENDED &c&l&m━━━━━━━━━━━━━━━━━━━━━'
+    - '&7The event has been force-ended by an administrator.'
+    - '&7No winner declared.'
+    - '&c&l&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
   event-force-ended-title: '&c&lEVENT ENDED'
   event-force-ended-subtitle: '&7Force-ended by admin'
-  
+
   whitelist-enabled: '&c&l⚠ &cThe server is whitelisted! An event is currently in progress.'
   event-not-running: '&cThe event is not currently running!'
   event-already-active: '&cAn event is already active!'
   setup-incomplete: '&cEvent setup is incomplete! Check center, spawn, lobby, and border settings.'
-  
+
   usage-shrink: '&cUsage: &f/event shrink <amount> <time>'
   usage-expand: '&cUsage: &f/event expand <amount> <time>'
   usage-border: '&cUsage: &f/event setup border <radius>'
-  
+
   admin-event-opened: '&a&lSuccess! &7Event opened for registration.'
   admin-countdown-started: '&a&lSuccess! &7Event countdown started.'
   admin-border-shrinking: '&a&lSuccess! &7Border shrink initiated.'
@@ -71,10 +108,15 @@ messages:
   admin-drop-activated: '&a&lSuccess! &7Drop phase activated.'
   admin-event-cancelled: '&a&lSuccess! &7Event cancelled.'
   admin-event-ended: '&a&lSuccess! &7Event force-ended.'
-  
+  admin-reloaded: '&a&lSuccess! &7Configuration reloaded.'
+
   no-event-active: '&cNo event is currently active!'
   event-must-be-open: '&cEvent must be open before starting!'
   invalid-number: '&cInvalid number! Please enter a positive value.'
+
+  border-warning-title: '&c&l⚠ WARNING ⚠'
+  border-warning-subtitle: '&7Return to the border in &c&l{time}s &7or die!'
+  border-death: '&c{player} &7died outside the border!'
 
 wand:
   material: 'BLAZE_ROD'
@@ -89,6 +131,7 @@ wand:
 firework-count: 8
 drop-phase-duration: 6
 drop-phase-final-diameter: 50
+drop-phase-freeze-time: 5
 
 winner-head-chat:
   - '&d❀ &e&lCongratulations {winner}! &d❀'

@@ -12,6 +12,7 @@ public class EventData {
     private Location center;
     private Location spawn;
     private Location lobby;
+    private Location diePosition;
     private double borderRadius;
     private double currentBorderSize;
 }

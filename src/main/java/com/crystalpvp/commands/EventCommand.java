@@ -87,7 +87,7 @@ public class EventCommand implements CommandExecutor, TabCompleter {
         }
         
         if (args.length == 2 && args[0].equalsIgnoreCase("setup")) {
-            return filterStartingWith(Arrays.asList("kit", "wand", "center", "spawn", "lobby", "border"), args[1]);
+            return filterStartingWith(Arrays.asList("kit", "wand", "center", "spawn", "lobby", "diePosition", "border"), args[1]);
         }
         
         if (args.length == 3 && args[0].equalsIgnoreCase("setup") && args[1].equalsIgnoreCase("border")) {
@@ -143,6 +143,10 @@ public class EventCommand implements CommandExecutor, TabCompleter {
             case "lobby":
                 plugin.getEventManager().getEventData().setLobby(player.getLocation());
                 plugin.getConfigManager().send(player, "lobby-set");
+                break;
+            case "dieposition":
+                plugin.getEventManager().getEventData().setDiePosition(player.getLocation());
+                plugin.getConfigManager().send(player, "die-position-set");
                 break;
             case "border":
                 if (args.length < 3) {
@@ -310,7 +314,7 @@ public class EventCommand implements CommandExecutor, TabCompleter {
     private void handleReload(CommandSender sender) {
         plugin.getConfigManager().reload();
         plugin.getKitManager().reload();
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lSuccess! &7Configuration reloaded."));
+        plugin.getConfigManager().send(sender, "admin-reloaded");
     }
     
     private void sendHelp(CommandSender sender) {
@@ -341,6 +345,7 @@ public class EventCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e/event setup center &8- &7Set arena center point"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e/event setup spawn &8- &7Set spawn location"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e/event setup lobby &8- &7Set lobby location"));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e/event setup diePosition &8- &7Set spectator location on death"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e/event setup border <radius> &8- &7Set border radius"));
         sender.sendMessage("");
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Tip: &fUse the wand to select the arena boundary"));
