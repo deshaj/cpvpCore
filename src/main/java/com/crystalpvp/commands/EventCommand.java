@@ -62,6 +62,9 @@ public class EventCommand implements CommandExecutor, TabCompleter {
             case "end":
                 handleEnd(sender);
                 break;
+            case "reload":
+                handleReload(sender);
+                break;
             case "help":
                 sendHelp(sender);
                 break;
@@ -80,7 +83,7 @@ public class EventCommand implements CommandExecutor, TabCompleter {
         }
         
         if (args.length == 1) {
-            return filterStartingWith(Arrays.asList("setup", "open", "start", "shrink", "expand", "drop", "cancel", "end", "help"), args[0]);
+            return filterStartingWith(Arrays.asList("setup", "open", "start", "shrink", "expand", "drop", "cancel", "end", "reload", "help"), args[0]);
         }
         
         if (args.length == 2 && args[0].equalsIgnoreCase("setup")) {
@@ -304,6 +307,12 @@ public class EventCommand implements CommandExecutor, TabCompleter {
         plugin.getConfigManager().send(sender, "admin-event-ended");
     }
     
+    private void handleReload(CommandSender sender) {
+        plugin.getConfigManager().reload();
+        plugin.getKitManager().reload();
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lSuccess! &7Configuration reloaded."));
+    }
+    
     private void sendHelp(CommandSender sender) {
         sender.sendMessage("");
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8&m━━━━━━━━━━━&r &b&lCrystalPvP Event Commands &8&m━━━━━━━━━━━"));
@@ -316,6 +325,7 @@ public class EventCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b/event drop &8- &7Activate drop phase"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b/event cancel &8- &7Cancel current event"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b/event end &8- &7Force end event"));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b/event reload &8- &7Reload configuration"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&b/event help &8- &7Show this help menu"));
         sender.sendMessage("");
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));

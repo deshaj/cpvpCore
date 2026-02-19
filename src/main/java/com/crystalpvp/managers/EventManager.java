@@ -8,6 +8,9 @@ import com.crystalpvp.enums.EventState;
 import com.crystalpvp.utils.HeadChatUtil;
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -26,6 +29,7 @@ public class EventManager {
     private final Set<UUID> participants;
     private WinnerData lastWinner;
     private int countdownTask = -1;
+    private BossBar countdownBar;
     
     public EventManager(CrystalPvP plugin) {
         this.plugin = plugin;
@@ -93,13 +97,37 @@ public class EventManager {
     }
     
     private void startCountdown() {
+        countdownBar = Bukkit.createBossBar(
+            ChatColor.translateAlternateColorCodes('&', "&e&lEvent Starting in 30s"),
+            BarColor.YELLOW,
+            BarStyle.SOLID
+        );
+        
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            countdownBar.addPlayer(player);
+        }
+        
         countdownTask = new BukkitRunnable() {
             int time = 30;
+            final int maxTime = 30;
             
             @Override
             public void run() {
                 if (time == 10) {
                     teleportAllToSpawn();
+                }
+                
+                double progress = (double) time / maxTime;
+                countdownBar.setProgress(Math.max(0.0, Math.min(1.0, progress)));
+                
+                String barTitle = ChatColor.translateAlternateColorCodes('&', 
+                    "&e&lEvent Starting in &f" + time + "s");
+                countdownBar.setTitle(barTitle);
+                
+                if (time <= 10) {
+                    countdownBar.setColor(BarColor.RED);
+                } else if (time <= 20) {
+                    countdownBar.setColor(BarColor.YELLOW);
                 }
                 
                 if (time <= 10 && time > 0) {
@@ -114,12 +142,20 @@ public class EventManager {
                 
                 if (time == 0) {
                     beginEvent();
+                    removeBossBar();
                     cancel();
                 }
                 
                 time--;
             }
         }.runTaskTimer(plugin, 0L, 20L).getTaskId();
+    }
+    
+    private void removeBossBar() {
+        if (countdownBar != null) {
+            countdownBar.removeAll();
+            countdownBar = null;
+        }
     }
     
     private void teleportAllToSpawn() {
@@ -339,5 +375,6 @@ public class EventManager {
             Bukkit.getScheduler().cancelTask(countdownTask);
             countdownTask = -1;
         }
+        removeBossBar();
     }
 }

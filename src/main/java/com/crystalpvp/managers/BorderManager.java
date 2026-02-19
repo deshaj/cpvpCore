@@ -2,6 +2,7 @@ package com.crystalpvp.managers;
 
 import com.crystalpvp.CrystalPvP;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.WorldBorder;
@@ -13,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 public class BorderManager {
     
@@ -20,11 +22,14 @@ public class BorderManager {
     private BukkitRunnable currentShrinkTask;
     private final Map<Location, BlockData> removedBlocks;
     private final Random random;
+    private BukkitRunnable borderCheckTask;
+    private final Map<UUID, Integer> outsideBorderTime;
     
     public BorderManager(CrystalPvP plugin) {
         this.plugin = plugin;
         this.removedBlocks = new HashMap<>();
         this.random = new Random();
+        this.outsideBorderTime = new HashMap<>();
     }
     
     public void resetBorder() {
@@ -47,6 +52,81 @@ public class BorderManager {
         plugin.getEventManager().getEventData().setCurrentBorderSize(radius * 2);
         
         plugin.getLogger().info("Border reset to center: " + center.getBlockX() + ", " + center.getBlockZ() + " with diameter: " + (radius * 2));
+        
+        startBorderCheck();
+    }
+    
+    public void startBorderCheck() {
+        if (borderCheckTask != null) {
+            borderCheckTask.cancel();
+        }
+        
+        outsideBorderTime.clear();
+        
+        borderCheckTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (plugin.getEventManager().getEventData().getState() != com.crystalpvp.enums.EventState.RUNNING) {
+                    outsideBorderTime.clear();
+                    cancel();
+                    return;
+                }
+                
+                Location center = plugin.getEventManager().getEventData().getCenter();
+                if (center == null) {
+                    return;
+                }
+                
+                WorldBorder border = center.getWorld().getWorldBorder();
+                double borderSize = border.getSize() / 2.0;
+                Location borderCenter = border.getCenter();
+                
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (!plugin.getEventManager().isParticipant(player.getUniqueId())) {
+                        continue;
+                    }
+                    
+                    Location playerLoc = player.getLocation();
+                    double distance = Math.sqrt(
+                        Math.pow(playerLoc.getX() - borderCenter.getX(), 2) +
+                        Math.pow(playerLoc.getZ() - borderCenter.getZ(), 2)
+                    );
+                    
+                    if (distance > borderSize) {
+                        UUID playerId = player.getUniqueId();
+                        int timeOutside = outsideBorderTime.getOrDefault(playerId, 0) + 1;
+                        outsideBorderTime.put(playerId, timeOutside);
+                        
+                        int timeRemaining = 10 - timeOutside;
+                        
+                        if (timeRemaining > 0) {
+                            String title = ChatColor.translateAlternateColorCodes('&', "&c&l⚠ WARNING ⚠");
+                            String subtitle = ChatColor.translateAlternateColorCodes('&', 
+                                "&7Return to the border in &c&l" + timeRemaining + "s &7or die!");
+                            player.sendTitle(title, subtitle, 0, 25, 5);
+                        } else {
+                            player.setHealth(0.0);
+                            outsideBorderTime.remove(playerId);
+                            
+                            String deathMsg = ChatColor.translateAlternateColorCodes('&', 
+                                "&c" + player.getName() + " &7died outside the border!");
+                            Bukkit.broadcastMessage(deathMsg);
+                        }
+                    } else {
+                        outsideBorderTime.remove(player.getUniqueId());
+                    }
+                }
+            }
+        };
+        borderCheckTask.runTaskTimer(plugin, 20L, 20L);
+    }
+    
+    public void stopBorderCheck() {
+        if (borderCheckTask != null) {
+            borderCheckTask.cancel();
+            borderCheckTask = null;
+        }
+        outsideBorderTime.clear();
     }
     
     public void shrinkBorder(double amount, int time) {
@@ -74,7 +154,7 @@ public class BorderManager {
             .replace("{time}", String.valueOf(time));
         Bukkit.broadcastMessage(msg);
         
-        for (org.bukkit.entity.Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             String title = plugin.getConfigManager().getMessageRaw("border-shrinking-title");
             String subtitle = plugin.getConfigManager().getMessageRaw("border-shrinking-subtitle")
                 .replace("{size}", String.format("%.1f", newSize))
@@ -205,7 +285,7 @@ public class BorderManager {
             .replace("{time}", String.valueOf(time));
         Bukkit.broadcastMessage(msg);
         
-        for (org.bukkit.entity.Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             String title = plugin.getConfigManager().getMessageRaw("border-expanding-title");
             String subtitle = plugin.getConfigManager().getMessageRaw("border-expanding-subtitle")
                 .replace("{size}", String.format("%.1f", newSize))
@@ -253,11 +333,14 @@ public class BorderManager {
         WorldBorder border = center.getWorld().getWorldBorder();
         border.setSize(60000000);
         border.setCenter(0, 0);
+        
+        stopBorderCheck();
     }
     
     public void shutdown() {
         if (currentShrinkTask != null) {
             currentShrinkTask.cancel();
         }
+        stopBorderCheck();
     }
 }

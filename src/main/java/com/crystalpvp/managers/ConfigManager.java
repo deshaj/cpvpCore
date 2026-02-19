@@ -9,18 +9,35 @@ import org.bukkit.entity.Player;
 public class ConfigManager {
     
     private final CrystalPvP plugin;
-    private final FileConfiguration config;
+    private FileConfiguration config;
     
     public ConfigManager(CrystalPvP plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
     }
     
+    public void reload() {
+        plugin.reloadConfig();
+        this.config = plugin.getConfig();
+    }
+    
+    
+    public String getMessageRaw(String path) {
+        return ChatColor.translateAlternateColorCodes('&', config.getString("messages." + path, ""));
+    }
+=======
     public String getMessage(String path) {
         String prefix = config.getString("prefix", "&8[&bCrystalPvP&8] &7");
         String message = config.getString("messages." + path, "");
-        return ChatColor.translateAlternateColorCodes('&', prefix + message);
+        String formatted = ChatColor.translateAlternateColorCodes('&', prefix + message);
+        return formatted;
     }
+    
+    public String getMessageRaw(String path) {
+        String message = config.getString("messages." + path, "");
+        return ChatColor.translateAlternateColorCodes('&', message);
+    }
+=======
     
     public String getMessageRaw(String path) {
         return ChatColor.translateAlternateColorCodes('&', config.getString("messages." + path, ""));

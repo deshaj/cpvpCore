@@ -33,6 +33,10 @@ public class KitManager {
         kitConfig = YamlConfiguration.loadConfiguration(kitFile);
     }
     
+    public void reload() {
+        kitConfig = YamlConfiguration.loadConfiguration(kitFile);
+    }
+    
     public void saveKit(Player player) {
         PlayerInventory inv = player.getInventory();
         
