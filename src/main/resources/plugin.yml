@@ -1,0 +1,12 @@
+name: CrystalPvP
+version: 1.0.0
+main: com.crystalpvp.CrystalPvP
+api-version: '1.20'
+softdepend: [PlaceholderAPI]
+author: Server
+description: High-performance CrystalPvP Event plugin
+
+commands:
+  event:
+    aliases: [e]
+    description: CrystalPvP Event commands
